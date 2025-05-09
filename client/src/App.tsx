@@ -1,27 +1,54 @@
 import { Route, Switch } from "wouter";
-import Home from "@/pages/Home";
-import NotFound from "@/pages/not-found";
+import { lazy, Suspense } from "react";
+import { Loader2 } from "lucide-react";
 import MainLayout from "@/layouts/MainLayout";
 import { ThemeProvider } from "./components/ui/theme-provider";
 import { ScrollSpyProvider } from "./contexts/ScrollSpyContext";
+import { AuthProvider } from "./contexts/AuthContext";
+import { Toaster } from "@/components/ui/toaster";
+
+// Lazy load pages for code splitting
+const Home = lazy(() => import("@/pages/Home"));
+const NotFound = lazy(() => import("@/pages/not-found"));
+const AttentionPlayground = lazy(() => import("@/pages/AttentionPlayground"));
+const UserDashboard = lazy(() => import("@/pages/UserDashboard"));
+const Search = lazy(() => import("@/pages/Search"));
+const ApiDocs = lazy(() => import("@/pages/ApiDocs"));
+
+// Loading component for suspense fallback
+const PageLoader = () => (
+  <div className="w-full h-[70vh] flex flex-col items-center justify-center">
+    <Loader2 className="h-10 w-10 animate-spin text-primary" />
+    <p className="mt-4 text-lg">Loading content...</p>
+  </div>
+);
 
 function Router() {
   return (
-    <Switch>
-      <Route path="/" component={Home} />
-      <Route component={NotFound} />
-    </Switch>
+    <Suspense fallback={<PageLoader />}>
+      <Switch>
+        <Route path="/" component={Home} />
+        <Route path="/playground" component={AttentionPlayground} />
+        <Route path="/dashboard" component={UserDashboard} />
+        <Route path="/search" component={Search} />
+        <Route path="/api-docs" component={ApiDocs} />
+        <Route component={NotFound} />
+      </Switch>
+    </Suspense>
   );
 }
 
 function App() {
   return (
     <ThemeProvider defaultTheme="light" storageKey="transformer-ui-theme">
-      <ScrollSpyProvider>
-        <MainLayout>
-          <Router />
-        </MainLayout>
-      </ScrollSpyProvider>
+      <AuthProvider>
+        <ScrollSpyProvider>
+          <MainLayout>
+            <Router />
+          </MainLayout>
+          <Toaster />
+        </ScrollSpyProvider>
+      </AuthProvider>
     </ThemeProvider>
   );
 }

@@ -34,6 +34,14 @@ const navigation: Record<string, NavItem[]> = {
   ],
 };
 
+// Application pages navigation (separate from section navigation)
+const pageNavigation: NavItem[] = [
+  { id: "playground", section: "Pages", name: "Attention Playground", icon: "ri-braces-line" },
+  { id: "dashboard", section: "Pages", name: "User Dashboard", icon: "ri-user-line" },
+  { id: "search", section: "Pages", name: "Search Content", icon: "ri-search-line" },
+  { id: "api-docs", section: "Pages", name: "API Documentation", icon: "ri-file-list-3-line" },
+];
+
 type MainLayoutProps = {
   children: ReactNode;
 };
@@ -146,6 +154,36 @@ function MainLayout({ children }: MainLayoutProps) {
                 </ul>
               </div>
             ))}
+            
+            {/* Additional Pages Navigation */}
+            <div>
+              <p className="text-xs uppercase font-semibold text-neutral-400 mb-2 mt-6">Features</p>
+              <ul className="space-y-1">
+                {pageNavigation.map((item) => (
+                  <li key={item.id}>
+                    <a
+                      href={`/${item.id}`}
+                      className={cn(
+                        "flex items-center px-4 py-2 text-sm rounded-lg font-medium",
+                        location === `/${item.id}`
+                          ? "text-primary-600 bg-primary-50"
+                          : "text-neutral-600 hover:bg-neutral-100"
+                      )}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        setLocation(`/${item.id}`);
+                        if (isMobile) {
+                          setSidebarOpen(false);
+                        }
+                      }}
+                    >
+                      <i className={`${item.icon} mr-3`}></i>
+                      {item.name}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
           </nav>
         </div>
       </aside>
