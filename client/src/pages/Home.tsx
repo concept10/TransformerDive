@@ -6,8 +6,8 @@ import TransformerFlow from "@/components/TransformerFlow";
 import AttentionVisualizer from "@/components/AttentionVisualizer";
 import CodeBlock from "@/components/CodeBlock";
 import QuizQuestion from "@/components/QuizQuestion";
-import { useScrollSpy } from "@/hooks/use-scroll-spy";
 import { useQuery } from "@tanstack/react-query";
+import { useScrollSpyContext } from "@/contexts/ScrollSpyContext";
 
 export default function Home() {
   const sectionsRef = useRef<HTMLDivElement>(null);
@@ -25,8 +25,12 @@ export default function Home() {
   const quizRef = useRef<HTMLElement>(null);
   const resourcesRef = useRef<HTMLElement>(null);
   
-  const activeSection = useScrollSpy({
-    sectionElementRefs: [
+  // Get the context for scroll spy
+  const { activeSection, setActiveSection } = useScrollSpyContext();
+  
+  // Set up the scroll observation
+  useEffect(() => {
+    const sectionRefs = [
       { id: "introduction", ref: introRef },
       { id: "architecture", ref: architectureRef },
       { id: "embeddings", ref: embeddingsRef },
@@ -38,18 +42,48 @@ export default function Home() {
       { id: "comparison", ref: comparisonRef },
       { id: "quiz", ref: quizRef },
       { id: "resources", ref: resourcesRef },
-    ],
-    options: {
-      root: sectionsRef.current,
-      threshold: 0.2,
-    }
-  });
+    ];
+    
+    const observer = new IntersectionObserver(
+      (entries) => {
+        // Get all entries that are currently visible
+        const visibleEntries = entries.filter(entry => entry.isIntersecting);
+
+        // If we have at least one visible section
+        if (visibleEntries.length > 0) {
+          // Find the section that appears first in the DOM
+          const visibleIds = visibleEntries.map(entry => entry.target.id);
+
+          // Sort visible sections by their position in the sectionsRef array
+          const orderedVisible = sectionRefs
+            .filter(section => visibleIds.includes(section.id))
+            .map(section => section.id);
+
+          if (orderedVisible.length > 0) {
+            setActiveSection(orderedVisible[0]);
+          }
+        }
+      },
+      { root: null, rootMargin: "0px", threshold: 0.2 }
+    );
+    
+    // Observe all sections
+    sectionRefs.forEach(({ id, ref }) => {
+      if (ref.current) {
+        observer.observe(ref.current);
+      }
+    });
+    
+    return () => {
+      observer.disconnect();
+    };
+  }, [setActiveSection]);
 
   // Fetch content from the server
   const { data: content, isLoading } = useQuery({
     queryKey: ['/api/content'],
   });
-
+  
   // Set the hash based on active section
   useEffect(() => {
     if (activeSection && activeSection !== window.location.hash.substring(1)) {
