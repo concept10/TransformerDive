@@ -1,10 +1,10 @@
-import { Route, Switch } from "wouter";
-import { lazy, Suspense } from "react";
+import { Route, Switch, useLocation } from "wouter";
+import { lazy, Suspense, useEffect } from "react";
 import { Loader2 } from "lucide-react";
 import MainLayout from "@/layouts/MainLayout";
 import { ThemeProvider } from "./components/ui/theme-provider";
 import { ScrollSpyProvider } from "./contexts/ScrollSpyContext";
-import { AuthProvider } from "./contexts/AuthContext";
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { Toaster } from "@/components/ui/toaster";
 
 // Lazy load pages for code splitting
@@ -14,6 +14,7 @@ const AttentionPlayground = lazy(() => import("@/pages/AttentionPlayground"));
 const UserDashboard = lazy(() => import("@/pages/UserDashboard"));
 const Search = lazy(() => import("@/pages/Search"));
 const ApiDocs = lazy(() => import("@/pages/ApiDocs"));
+const Login = lazy(() => import("@/pages/Login"));
 
 // Loading component for suspense fallback
 const PageLoader = () => (
@@ -23,15 +24,36 @@ const PageLoader = () => (
   </div>
 );
 
+// Auth protected route component
+function ProtectedRoute({ component: Component }: { component: React.ComponentType }) {
+  const { isAuthenticated, isLoading } = useAuth();
+  const [, setLocation] = useLocation();
+  
+  useEffect(() => {
+    if (!isLoading && !isAuthenticated) {
+      setLocation("/login");
+    }
+  }, [isAuthenticated, isLoading, setLocation]);
+  
+  if (isLoading) {
+    return <PageLoader />;
+  }
+  
+  return isAuthenticated ? <Component /> : null;
+}
+
 function Router() {
   return (
     <Suspense fallback={<PageLoader />}>
       <Switch>
         <Route path="/" component={Home} />
         <Route path="/playground" component={AttentionPlayground} />
-        <Route path="/dashboard" component={UserDashboard} />
+        <Route path="/dashboard">
+          <ProtectedRoute component={UserDashboard} />
+        </Route>
         <Route path="/search" component={Search} />
         <Route path="/api-docs" component={ApiDocs} />
+        <Route path="/login" component={Login} />
         <Route component={NotFound} />
       </Switch>
     </Suspense>

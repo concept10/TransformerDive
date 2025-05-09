@@ -4,6 +4,8 @@ import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Progress } from "@/components/ui/progress";
 import { useScrollSpyContext } from "@/contexts/ScrollSpyContext";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { UserMenu } from "@/components/UserMenu";
 
 type NavItem = {
   id: string;
@@ -114,8 +116,8 @@ function MainLayout({ children }: MainLayoutProps) {
         )}
       >
         <div className="p-6">
-          <div className="flex items-center justify-between md:justify-start mb-8">
-            <h1 className="text-2xl font-bold text-neutral-800">Transformer Models</h1>
+          <div className="flex items-center justify-between mb-8">
+            <h1 className="text-2xl font-bold text-neutral-800 dark:text-neutral-100">Transformer Models</h1>
             {isMobile && (
               <button
                 onClick={() => setSidebarOpen(false)}
@@ -201,10 +203,13 @@ function MainLayout({ children }: MainLayoutProps) {
                 <span className="text-sm font-medium">Your progress:</span>
                 <span className="text-sm text-primary-600 font-semibold">{progress}%</span>
               </div>
-              <div className="flex items-center">
+              <div className="flex items-center space-x-4">
                 <button className="text-sm text-primary-600 font-medium focus:outline-none hover:text-primary-700">
                   Save progress
                 </button>
+                <div className="border-l border-neutral-200 h-6"></div>
+                <UserMenu />
+                <ThemeToggle />
               </div>
             </div>
           </div>
