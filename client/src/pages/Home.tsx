@@ -420,7 +420,7 @@ class PositionalEncoding(nn.Module):
       </section>
       
       {/* Architecture Overview Section */}
-      <section id="architecture" ref={useScrollSpy.sectionRefs[1].ref} className="mb-16">
+      <section id="architecture" ref={architectureRef} className="mb-16">
         <h2 className="text-3xl font-bold mb-5 text-neutral-800">Transformer Architecture Overview</h2>
         
         <p className="text-lg text-neutral-600 leading-relaxed mb-6">
@@ -437,7 +437,7 @@ class PositionalEncoding(nn.Module):
       </section>
 
       {/* Embeddings Section */}
-      <section id="embeddings" ref={useScrollSpy.sectionRefs[2].ref} className="mb-16">
+      <section id="embeddings" ref={embeddingsRef} className="mb-16">
         <h2 className="text-3xl font-bold mb-5 text-neutral-800">Embeddings & Positional Encoding</h2>
         
         <p className="text-lg text-neutral-600 leading-relaxed mb-6">
@@ -533,7 +533,7 @@ class PositionalEncoding(nn.Module):
       </section>
 
       {/* Self-Attention Section */}
-      <section id="attention" ref={useScrollSpy.sectionRefs[3].ref} className="mb-16">
+      <section id="attention" ref={attentionRef} className="mb-16">
         <h2 className="text-3xl font-bold mb-5 text-neutral-800">Self-Attention Mechanism</h2>
         
         <p className="text-lg text-neutral-600 leading-relaxed mb-6">
@@ -544,7 +544,7 @@ class PositionalEncoding(nn.Module):
       </section>
 
       {/* Encoder Structure Section */}
-      <section id="encoder" ref={useScrollSpy.sectionRefs[4].ref} className="mb-16">
+      <section id="encoder" ref={encoderRef} className="mb-16">
         <h2 className="text-3xl font-bold mb-5 text-neutral-800">Encoder Structure</h2>
         
         <p className="text-lg text-neutral-600 leading-relaxed mb-6">
@@ -674,7 +674,7 @@ class PositionalEncoding(nn.Module):
       </section>
 
       {/* Decoder Structure Section */}
-      <section id="decoder" ref={useScrollSpy.sectionRefs[5].ref} className="mb-16">
+      <section id="decoder" ref={decoderRef} className="mb-16">
         <h2 className="text-3xl font-bold mb-5 text-neutral-800">Decoder Structure</h2>
         
         <p className="text-lg text-neutral-600 leading-relaxed mb-6">
@@ -878,7 +878,7 @@ class PositionalEncoding(nn.Module):
       </section>
 
       {/* Code Implementation Section */}
-      <section id="code" ref={useScrollSpy.sectionRefs[6].ref} className="mb-16">
+      <section id="code" ref={codeRef} className="mb-16">
         <h2 className="text-3xl font-bold mb-5 text-neutral-800">Code Implementation</h2>
         
         <p className="text-lg text-neutral-600 leading-relaxed mb-6">
@@ -935,7 +935,7 @@ class PositionalEncoding(nn.Module):
       </section>
 
       {/* Training Process Section */}
-      <section id="training" ref={useScrollSpy.sectionRefs[7].ref} className="mb-16">
+      <section id="training" ref={trainingRef} className="mb-16">
         <h2 className="text-3xl font-bold mb-5 text-neutral-800">Training Process</h2>
         
         <p className="text-lg text-neutral-600 leading-relaxed mb-6">
@@ -1110,7 +1110,7 @@ class PositionalEncoding(nn.Module):
       </section>
 
       {/* Model Comparisons Section */}
-      <section id="comparison" ref={useScrollSpy.sectionRefs[8].ref} className="mb-16">
+      <section id="comparison" ref={comparisonRef} className="mb-16">
         <h2 className="text-3xl font-bold mb-5 text-neutral-800">Model Comparisons</h2>
         
         <p className="text-lg text-neutral-600 leading-relaxed mb-6">
@@ -1252,7 +1252,7 @@ class PositionalEncoding(nn.Module):
       </section>
 
       {/* Knowledge Check Section */}
-      <section id="quiz" ref={useScrollSpy.sectionRefs[9].ref} className="mb-16">
+      <section id="quiz" ref={quizRef} className="mb-16">
         <h2 className="text-3xl font-bold mb-5 text-neutral-800">Test Your Knowledge</h2>
         
         <p className="text-lg text-neutral-600 leading-relaxed mb-6">
@@ -1283,7 +1283,7 @@ class PositionalEncoding(nn.Module):
       </section>
       
       {/* Further Resources */}
-      <section id="resources" ref={useScrollSpy.sectionRefs[10].ref} className="mb-8">
+      <section id="resources" ref={resourcesRef} className="mb-8">
         <h2 className="text-3xl font-bold mb-5 text-neutral-800">Further Resources</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
