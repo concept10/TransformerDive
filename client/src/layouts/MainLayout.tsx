@@ -3,6 +3,7 @@ import { useLocation } from "wouter";
 import { cn } from "@/lib/utils";
 import { useIsMobile } from "@/hooks/use-mobile";
 import { Progress } from "@/components/ui/progress";
+import { useScrollSpyContext } from "@/contexts/ScrollSpyContext";
 
 type NavItem = {
   id: string;
@@ -38,9 +39,9 @@ type MainLayoutProps = {
 };
 
 function MainLayout({ children }: MainLayoutProps) {
+  const { activeSection, setActiveSection } = useScrollSpyContext();
   const isMobile = useIsMobile();
   const [sidebarOpen, setSidebarOpen] = useState(!isMobile);
-  const [activeSection, setActiveSection] = useState("introduction");
   const [progress, setProgress] = useState(15);
   const [location, setLocation] = useLocation();
 
@@ -70,7 +71,7 @@ function MainLayout({ children }: MainLayoutProps) {
     return () => {
       window.removeEventListener("hashchange", handleHashChange);
     };
-  }, []);
+  }, [setActiveSection]);
 
   const handleNavClick = (id: string) => {
     setActiveSection(id);

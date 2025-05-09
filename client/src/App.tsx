@@ -3,6 +3,7 @@ import Home from "@/pages/Home";
 import NotFound from "@/pages/not-found";
 import MainLayout from "@/layouts/MainLayout";
 import { ThemeProvider } from "./components/ui/theme-provider";
+import { ScrollSpyProvider } from "./contexts/ScrollSpyContext";
 
 function Router() {
   return (
@@ -16,9 +17,11 @@ function Router() {
 function App() {
   return (
     <ThemeProvider defaultTheme="light" storageKey="transformer-ui-theme">
-      <MainLayout>
-        <Router />
-      </MainLayout>
+      <ScrollSpyProvider>
+        <MainLayout>
+          <Router />
+        </MainLayout>
+      </ScrollSpyProvider>
     </ThemeProvider>
   );
 }
