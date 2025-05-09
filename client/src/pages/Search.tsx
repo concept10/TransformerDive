@@ -55,7 +55,7 @@ function getSearchResults(query: string): SearchResult[] {
   if (!query.trim()) return [];
   
   // For demo purposes, return mock results based on the query
-  return [
+  const results: SearchResult[] = [
     {
       id: "section-1",
       title: "Self-Attention Mechanism",
@@ -63,7 +63,7 @@ function getSearchResults(query: string): SearchResult[] {
       snippet: `...The self-attention mechanism is the core component of transformer models, allowing the model to weigh the importance of different words in the input sequence...`,
       url: "/#attention",
       parentSection: "Transformer Architecture",
-    },
+    } as SectionResult,
     {
       id: "section-2",
       title: "Multi-Head Attention",
@@ -71,7 +71,7 @@ function getSearchResults(query: string): SearchResult[] {
       snippet: `...Multi-head attention allows the model to jointly attend to information from different representation subspaces at different positions...`,
       url: "/#multi-head-attention",
       parentSection: "Self-Attention Mechanism",
-    },
+    } as SectionResult,
     {
       id: "article-1",
       title: "Understanding Transformer Attention",
@@ -80,7 +80,7 @@ function getSearchResults(query: string): SearchResult[] {
       url: "/articles/understanding-transformer-attention",
       author: "Jane Smith",
       publishDate: "2023-08-15",
-    },
+    } as ArticleResult,
     {
       id: "code-1",
       title: "Implementing Self-Attention in PyTorch",
@@ -89,7 +89,7 @@ function getSearchResults(query: string): SearchResult[] {
       url: "/examples/self-attention-pytorch",
       language: "python",
       complexity: "intermediate",
-    },
+    } as CodeExampleResult,
     {
       id: "concept-1",
       title: "Scaled Dot-Product Attention",
@@ -97,7 +97,7 @@ function getSearchResults(query: string): SearchResult[] {
       snippet: `...Scaled dot-product attention computes the attention weights by taking the dot product of the query with all keys, dividing by the square root of the dimension of the keys...`,
       url: "/concepts/scaled-dot-product-attention",
       relatedConcepts: ["Query-Key-Value", "Softmax Function", "Attention Weights"],
-    },
+    } as ConceptResult,
     {
       id: "concept-2",
       title: "Positional Encoding",
@@ -105,8 +105,10 @@ function getSearchResults(query: string): SearchResult[] {
       snippet: `...Since transformer models don't have any built-in sequence order information, positional encodings are added to give the model information about the position of tokens...`,
       url: "/concepts/positional-encoding",
       relatedConcepts: ["Sinusoidal Encoding", "Learned Positional Embeddings"],
-    },
-  ].filter(result => 
+    } as ConceptResult,
+  ];
+  
+  return results.filter(result => 
     result.title.toLowerCase().includes(query.toLowerCase()) || 
     result.snippet.toLowerCase().includes(query.toLowerCase())
   );

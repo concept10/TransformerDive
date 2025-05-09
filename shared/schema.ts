@@ -55,6 +55,7 @@ export const userProgress = pgTable("user_progress", {
   progress: integer("progress").notNull().default(0),
   completedSections: jsonb("completed_sections").notNull().default([]),
   quizScores: jsonb("quiz_scores").notNull().default({}),
+  sectionProgress: jsonb("section_progress").notNull().default({}),
   lastAccessed: text("last_accessed").notNull(),
 });
 
@@ -63,6 +64,7 @@ export const insertUserProgressSchema = createInsertSchema(userProgress).pick({
   progress: true,
   completedSections: true,
   quizScores: true,
+  sectionProgress: true,
   lastAccessed: true,
 });
 

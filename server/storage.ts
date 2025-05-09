@@ -114,6 +114,7 @@ export class MemStorage implements IStorage {
         progress: 0,
         completedSections: [],
         quizScores: {},
+        sectionProgress: {},
         lastAccessed: new Date().toISOString()
       };
     }
